@@ -50,7 +50,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
   radial-gradient(55% 45% at 72% 22%, var(--neb1), transparent 70%),
   radial-gradient(50% 45% at 18% 82%, var(--neb2), transparent 70%)}
 #sky{position:fixed;inset:0;width:100%;height:100%;display:block}
-#neb{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none;mix-blend-mode:screen}
+#neb{position:fixed;inset:0;width:100%;height:100%;display:block;pointer-events:none}
 
 /* constellation */
 #world{position:fixed;inset:0;display:grid;place-items:center;will-change:transform,filter,opacity}
@@ -98,7 +98,7 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 #dawn{position:fixed;inset:0;pointer-events:none;opacity:0;will-change:opacity;background:
   radial-gradient(130% 75% at 50% 115%,var(--horizon-a) 0%,var(--horizon-b) 38%,var(--horizon-c) 62%,transparent 85%),
   linear-gradient(180deg,var(--dusk-top),var(--dusk-bottom))}
-.star .sun{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(.4);
+.star .sun{position:absolute;left:50%;top:50%;width:560px;height:560px;margin:-280px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(.4);will-change:transform,opacity;
   background:radial-gradient(circle,var(--sun-g0) 0%,var(--sun-g1) 12%,var(--sun-g2) 32%,transparent 60%)}
 .star.listening .sun{opacity:calc(var(--g) * (.55 + .45 * var(--e)));transform:scale(calc(.5 + .9 * var(--g) + .25 * var(--e)))}
 /* the star's heart stays white-hot at any intensity; the colour only tints its rim, so it never turns into a flat coloured dot */
@@ -116,7 +116,7 @@ html.comic #halftone{display:block}
 html.comic .star .lname{font-family:var(--body);font-style:normal;font-weight:400;font-size:13px;letter-spacing:.18em;text-transform:uppercase}
 html.comic .ly{font-weight:400;letter-spacing:.005em;font-size:clamp(19px,4.4vw,27px);line-height:1.35}
 html.comic .ly .ch{transition:none}
-html.comic .ly{opacity:.5;filter:none}
+html.comic .ly{opacity:.5}
 html.comic .ly.past{opacity:.62}
 html.comic .ly.on{opacity:1}
 html.comic .ly .ch{opacity:.55}
@@ -190,7 +190,7 @@ html.hopemsg .star .lname{opacity:0!important}
   opacity:0;transition:opacity 1.2s var(--spring)}
 .star.listening .lname{opacity:.92}
 #lines{transition:opacity 1.2s}
-.star .bloom{position:absolute;left:50%;top:50%;width:220px;height:220px;margin:-110px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(.4);
+.star .bloom{position:absolute;left:50%;top:50%;width:220px;height:220px;margin:-110px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(.4);will-change:transform,opacity;
   background:radial-gradient(circle,rgba(255,244,226,.6) 0%,rgba(242,201,141,.24) 20%,rgba(242,201,141,.06) 42%,rgba(242,201,141,0) 62%)}
 .star.listening .label,.star.listening .halo{opacity:0;animation:none}
 .star.listening .core{transition:none;transform:scale(calc(.7 + .6 * min(var(--e), 1)));opacity:calc(.4 + .6 * min(var(--e), 1));
@@ -208,12 +208,12 @@ html.hopemsg .star .lname{opacity:0!important}
 /* lyrics */
 #lyrics{position:fixed;z-index:8;top:calc(64px + env(safe-area-inset-top,0px));left:20px;right:16px;max-width:34rem;height:min(42vh,330px);overflow:hidden;pointer-events:none;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0,#000 20%,#000 68%,transparent 100%);mask-image:linear-gradient(to bottom,transparent 0,#000 20%,#000 68%,transparent 100%)}
-.ltrack{position:absolute;inset:0 0 auto 0;display:grid;gap:14px;transition:transform 1s var(--spring),opacity .9s var(--spring),filter .9s var(--spring);will-change:transform}
-.ltrack.off{opacity:0;filter:blur(14px)}
+.ltrack{position:absolute;inset:0 0 auto 0;display:grid;gap:14px;transition:transform 1s var(--spring),opacity .9s var(--spring);will-change:transform,opacity}
+.ltrack.off{opacity:0}
 .ly{margin:0;font-family:var(--body);font-weight:700;font-size:clamp(20px,5.2vw,32px);line-height:1.22;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;
-  opacity:.26;filter:blur(1.2px);transform-origin:left center;transition:opacity .8s var(--spring),filter .8s var(--spring),transform .8s var(--spring)}
+  opacity:.26;transform-origin:left center;transition:opacity .8s var(--spring),transform .8s var(--spring)}
 .ly.past{opacity:.14}
-.ly.on{opacity:1;filter:blur(0);transform:scale(1.03)}
+.ly.on{opacity:1;transform:scale(1.03)}
 .ly b{font-weight:800}
 .ly b.glow.cel,.ly.on b.glow.cel{color:color-mix(in oklab, var(--ink), #a9dcff calc(var(--hg, 0) * 100%));
   text-shadow:0 0 calc(2px + 12px * var(--hg, 0)) rgba(200,232,255,calc(.95 * var(--hg, 0))),
@@ -226,9 +226,9 @@ html.hopemsg .star .lname{opacity:0!important}
 .ly .ch{display:inline-block;opacity:.32;
   background:linear-gradient(180deg,#fff 0%,rgba(232,238,255,.86) 52%,rgba(255,255,255,.97) 100%);
   -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  transition:opacity .6s var(--spring),filter .6s var(--spring),transform .75s var(--spring)}
-.ly.on .ch:not(.lit){filter:blur(4px);transform:translateY(.1em) scale(.96)}
-.ly .ch.lit{opacity:1;filter:none;transform:none}
+  transition:opacity .6s var(--spring),transform .75s var(--spring)}
+.ly.on .ch:not(.lit){opacity:.22;transform:translateY(.12em) scale(.94)}
+.ly .ch.lit{opacity:1;transform:none}
 .ly b .ch{background:none;-webkit-text-fill-color:currentColor}
 .ly .w{white-space:nowrap}
 .ly b.glow.red,.ly.on b.glow.red{color:color-mix(in oklab, var(--ink), #ff5c6e calc(var(--hg, 0) * 100%));
@@ -323,7 +323,7 @@ h1 .l2{animation:write 1.2s cubic-bezier(.3,.12,.45,1) 2.45s both}
 .panel{position:relative;width:100%;max-width:27rem;max-height:100%;overflow:auto;overscroll-behavior:contain;
   /* liquid glass: the sky shows through, bent and brightened, with a light edge on top */
   background:linear-gradient(160deg,rgba(255,255,255,.14),rgba(255,255,255,.04) 55%,rgba(255,255,255,.07));
-  -webkit-backdrop-filter:blur(30px) saturate(180%) brightness(1.08);backdrop-filter:blur(30px) saturate(180%) brightness(1.08);
+  -webkit-backdrop-filter:blur(22px) saturate(180%) brightness(1.08);backdrop-filter:blur(22px) saturate(180%) brightness(1.08);
   border:1px solid rgba(255,255,255,.24);border-radius:30px;padding:30px 24px 24px;
   box-shadow:inset 0 1px 0 rgba(255,255,255,.42),inset 0 -1px 0 rgba(255,255,255,.08),inset 0 0 30px rgba(255,255,255,.04),0 30px 80px rgba(0,0,0,.4);
   will-change:transform,filter,opacity}
@@ -435,7 +435,7 @@ h1 .l2{animation:write 1.2s cubic-bezier(.3,.12,.45,1) 2.45s both}
 /* the last song: a glass now-playing card with its cover and a live spectrum */
 .finplayer{flex:none;width:min(420px,100%);margin-top:18px;display:grid;grid-template-columns:auto 1fr;gap:8px 14px;align-items:center;padding:14px 16px 12px 14px;border-radius:28px;text-align:left;
   background:linear-gradient(160deg,rgba(255,255,255,.17),rgba(255,255,255,.05));border:1px solid rgba(255,255,255,.26);
-  -webkit-backdrop-filter:blur(28px) saturate(180%);backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);
   box-shadow:inset 0 1px 0 rgba(255,255,255,.45),inset 0 -1px 0 rgba(255,255,255,.08),0 24px 60px rgba(0,0,0,.35)}
 .fcover{width:78px;height:78px;border-radius:14px;object-fit:cover;grid-row:span 2;box-shadow:0 8px 24px rgba(0,0,0,.35)}
 .fhead{min-width:0;display:grid;gap:1px}
@@ -1194,7 +1194,7 @@ function spawn(s, z){
   s.w = Math.random() < .18;
 }
 function resize(){
-  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
   W = innerWidth; H = innerHeight;
   cv.width = W*dpr; cv.height = H*dpr;
   ctx.setTransform(dpr,0,0,dpr,0,0);
@@ -1241,6 +1241,14 @@ function fitHope(){
 }
 fitHope();
 addEventListener('resize', fitHope);
+const opCache = new WeakMap();
+function setOp(el, v){ const s = (Math.round(v * 200) / 200).toFixed(3); if (opCache.get(el) !== s){ opCache.set(el, s); el.style.opacity = s; } }
+const varCache = new WeakMap();
+function setVar(el, name, v){
+  const s = (Math.round(v * 100) / 100).toFixed(2);
+  let m = varCache.get(el); if (!m){ m = {}; varCache.set(el, m); }
+  if (m[name] !== s){ m[name] = s; el.style.setProperty(name, s); }
+}
 let last = performance.now();
 function frame(now){
   if (comic && now - last < 1000/11){ requestAnimationFrame(frame); return; }   // 11 fps: every frame "drawn"
@@ -1274,25 +1282,23 @@ function frame(now){
     spriteTheme = mkSprite(rgba(pal.s0, 1), rgba(pal.s1, .55), rgba(pal.s1, 0));
   }
   const gl = gold * listenMix;
-  if (finOn){ finale.style.setProperty('--e', glow.toFixed(3)); finale.style.setProperty('--g', gl.toFixed(3)); finDraw(); }
+  if (finOn){ setVar(finale, '--e', glow); setVar(finale, '--g', gl); finDraw(); }
   const gm = Math.max(keepGold ? .3 : 0, gl);
   const gc = Math.min(1, gm);
   if (listenMix > .001 || state === 'listening'){
-    world.style.setProperty('--e', glow.toFixed(3));
-    world.style.setProperty('--g', gl.toFixed(3));
+    setVar(world, '--g', gl);
   }
-  dawn.style.opacity = gc.toFixed(3);
-  sunglow.style.opacity = Math.min(1, gl).toFixed(3);
+  setOp(dawn, gc); setOp(sunglow, Math.min(1, gl));
   // above 100%: push the sky brighter and warmer instead of capping it
-  const ex = Math.round(Math.max(0, gm - 1) * 100) / 100;
+  const ex = Math.round(Math.max(0, gm - 1) * 10) / 10;
   if (ex !== lastEx){
     lastEx = ex;
     const f = ex ? `brightness(${(1 + 1.8 * ex).toFixed(2)}) saturate(${(1 + .6 * ex).toFixed(2)})` : '';
     dawn.style.filter = f; sunglow.style.filter = f;
   }
   const hit = song.paused ? 0 : curveAt(BOOST, song.currentTime) * Math.max(0, (glow - .55) / .45);
-  if (hit > .001 || listenMix > .001) world.style.setProperty('--e', (glow + hit * .7).toFixed(3));
-  if (hit > .02) sunglow.style.opacity = Math.min(1, Math.min(1, gl) + hit * .6).toFixed(3);
+  if (hit > .001 || listenMix > .001 || state === 'listening') setVar(world, '--e', glow + hit * .7);
+  if (hit > .02) setOp(sunglow, Math.min(1, Math.min(1, gl) + hit * .6));
   const beatDim = Math.min(1, .5 * (.3 + .7 * glow) + .4 * gm + .3 * hit);
   const effDim = dim * (1 - listenMix) + beatDim * listenMix;
   const bloomK = glow * .6 * listenMix + .3 * gm + .7 * hit;
@@ -1333,7 +1339,7 @@ function frame(now){
     const a0 = (.22 + .78*d) * (.72 + .28*Math.sin(now*.0018 + s.t));
     const a = a0 * effDim;
     const size = s.r * (.55 + d*1.7);
-    if (bloomK > .02 && d > .35) blooms.push(sx, sy, size * (9 + 16*glow + 10*gm) * (1 + 2.2*hit), a0 * bloomK);
+    if (bloomK > .02 && d > .45 && blooms.length < 720) blooms.push(sx, sy, size * (9 + 16*glow + 10*gm) * (1 + 2.2*hit), a0 * bloomK);
     ctx.globalAlpha = Math.min(1, a);
     if (!fresh){
       const px = cx + s.x*FOV/pz, py = cy + s.y*FOV/pz;
@@ -1364,7 +1370,7 @@ function frame(now){
 const nb = document.getElementById('neb'), nctx = nb.getContext('2d');
 nctx.imageSmoothingQuality = 'high';
 let NW = 0, NH = 0;
-function nresize(){ const k = Math.min(2, window.devicePixelRatio || 1); NW = Math.ceil(innerWidth * k); NH = Math.ceil(innerHeight * k); nb.width = NW; nb.height = NH; }
+function nresize(){ const k = Math.min(1.5, window.devicePixelRatio || 1); NW = Math.ceil(innerWidth * k); NH = Math.ceil(innerHeight * k); nb.width = NW; nb.height = NH; }
 nresize(); addEventListener('resize', nresize);
 const rng = seed => { let s = seed % 2147483647 || 1; return () => (s = s * 16807 % 2147483647) / 2147483647; };
 /* violet, magenta, teal, sky celeste and sea blue: they sit around the green without fighting it */
