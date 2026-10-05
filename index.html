@@ -211,9 +211,9 @@ html.hopemsg .star .lname{opacity:0!important}
 .ltrack{position:absolute;inset:0 0 auto 0;display:grid;gap:14px;transition:transform 1s var(--spring),opacity .9s var(--spring);will-change:transform,opacity}
 .ltrack.off{opacity:0}
 .ly{margin:0;font-family:var(--body);font-weight:700;font-size:clamp(20px,5.2vw,32px);line-height:1.22;letter-spacing:-.01em;color:var(--ink);text-wrap:balance;
-  opacity:.26;transform-origin:left center;transition:opacity .8s var(--spring),transform .8s var(--spring)}
+  opacity:.26;transition:opacity .8s ease}
 .ly.past{opacity:.14}
-.ly.on{opacity:1;transform:scale(1.03)}
+.ly.on{opacity:1}
 .ly b{font-weight:800}
 .ly b.glow.cel,.ly.on b.glow.cel{color:color-mix(in oklab, var(--ink), #a9dcff calc(var(--hg, 0) * 100%));
   text-shadow:0 0 calc(2px + 12px * var(--hg, 0)) rgba(200,232,255,calc(.95 * var(--hg, 0))),
@@ -223,9 +223,9 @@ html.hopemsg .star .lname{opacity:0!important}
   text-shadow:0 0 calc(2px + 12px * var(--hg, 0)) rgba(190,255,236,calc(.95 * var(--hg, 0))),
     0 0 calc(6px + 36px * var(--hg, 0)) rgba(110,226,200,calc(.75 * var(--hg, 0))),
     0 0 calc(18px + 80px * var(--hg, 0)) rgba(80,200,210,calc(.5 * var(--hg, 0)))}
-.ly .ch{display:inline-block;opacity:.32;color:#f6f8ff;transition:opacity .6s var(--spring),transform .75s var(--spring)}
-.ly.on .ch:not(.lit){opacity:.22;transform:translateY(.12em) scale(.94)}
-.ly .ch.lit{opacity:1;transform:none}
+.ly .ch{display:inline-block;opacity:.32;color:#f6f8ff;transition:opacity .45s ease}
+.ly.on .ch:not(.lit){opacity:.22}
+.ly .ch.lit{opacity:1}
 .ly b .ch{color:inherit}
 .ly .w{white-space:nowrap}
 .ly b.glow.red,.ly.on b.glow.red{color:color-mix(in oklab, var(--ink), #ff5c6e calc(var(--hg, 0) * 100%));
@@ -1562,7 +1562,7 @@ function zoomWorld(dir){
   world.style.transformOrigin = `${cx}px ${cy}px`;
   const A = {transform:'translate(0px,0px) scale(1)', filter:'blur(0px)', opacity:1};
   const M = {transform:`translate(${dx*.55}px,${dy*.55}px) scale(1.7)`, filter:'blur(4px)', opacity:.85};
-  const B = {transform:`translate(${dx}px,${dy}px) scale(3.6)`, filter:'blur(18px)', opacity:0};
+  const B = {transform:`translate(${dx}px,${dy}px) scale(3.6)`, filter:'blur(10px)', opacity:0};
   let kf = dir === 'in' ? [A, {...M, offset:.45}, B] : [B, {...M, offset:.55}, A];
   if (reduce) kf = dir === 'in' ? [{opacity:1},{opacity:0}] : [{opacity:0},{opacity:1}];
   return world.animate(kf, {duration: reduce ? 200 : (dir === 'in' ? 980 : 900), easing: EASE, fill:'forwards'});
@@ -1895,7 +1895,7 @@ async function openStar(i){
   overlay.hidden = false;
   const a = panel.animate(
     reduce ? [{opacity:0},{opacity:1}] :
-    [{opacity:0, transform:'scale(.86)', filter:'blur(22px)'},
+    [{opacity:0, transform:'scale(.86)', filter:'blur(12px)'},
      {opacity:1, transform:'scale(1)', filter:'blur(0px)'}],
     {duration: reduce ? 200 : 820, delay: reduce ? 0 : 440, easing: SPRING, fill:'both'});
   await a.finished;
@@ -1930,7 +1930,7 @@ async function enterListening(){
   const out = panel.animate(
     reduce ? [{opacity:1},{opacity:0}] :
     [{opacity:1, transform:'scale(1)', filter:'blur(0px)'},
-     {opacity:0, transform:'scale(1.04)', filter:'blur(22px)'}],
+     {opacity:0, transform:'scale(1.04)', filter:'blur(12px)'}],
     {duration: reduce ? 150 : 750, easing:'cubic-bezier(.4,0,.6,1)', fill:'forwards'});
   s.el.classList.add('listening');
   world.classList.add('listen');
@@ -1939,7 +1939,7 @@ async function enterListening(){
   const T = sc => `translate(${dx}px,${dy}px) scale(${sc})`;
   const kf = reduce
     ? [{transform:T(1), opacity:0}, {transform:T(1), opacity:1}]
-    : [{transform:T(3.6), filter:'blur(18px)', opacity:0},
+    : [{transform:T(3.6), filter:'blur(10px)', opacity:0},
        {transform:T(1.9), filter:'blur(6px)', opacity:.7, offset:.4},
        {transform:T(1), filter:'blur(0px)', opacity:1}];
   const z = world.animate(kf, {duration: reduce ? 250 : 1900, delay: reduce ? 0 : 250, easing: SPRING, fill:'both'});
@@ -2003,7 +2003,7 @@ async function backToNote(){
     ? [{transform:T(1), opacity:1}, {transform:T(1), opacity:0}]
     : [{transform:T(1), filter:'blur(0px)', opacity:1},
        {transform:T(1.9), filter:'blur(6px)', opacity:.7, offset:.55},
-       {transform:T(3.6), filter:'blur(18px)', opacity:0}],
+       {transform:T(3.6), filter:'blur(10px)', opacity:0}],
     {duration: reduce ? 200 : 980, easing: EASE, fill:'forwards'});
   warp(26, 1050);
   content.innerHTML = panelHTML(STARS[0]);
@@ -2012,7 +2012,7 @@ async function backToNote(){
   overlay.hidden = false;
   const a = panel.animate(
     reduce ? [{opacity:0},{opacity:1}] :
-    [{opacity:0, transform:'scale(.86)', filter:'blur(22px)'},
+    [{opacity:0, transform:'scale(.86)', filter:'blur(12px)'},
      {opacity:1, transform:'scale(1)', filter:'blur(0px)'}],
     {duration: reduce ? 200 : 820, delay: reduce ? 0 : 380, easing: SPRING, fill:'both'});
   await fade.finished;
@@ -2099,7 +2099,7 @@ async function closePanel(){
   const out = panel.animate(
     reduce ? [{opacity:1},{opacity:0}] :
     [{opacity:1, transform:'scale(1)', filter:'blur(0px)'},
-     {opacity:0, transform:'scale(.93)', filter:'blur(16px)'}],
+     {opacity:0, transform:'scale(.93)', filter:'blur(9px)'}],
     {duration: reduce ? 150 : 380, easing:'cubic-bezier(.4,0,.9,.6)', fill:'forwards'});
   await wait(reduce ? 0 : 110);
   const z = zoomWorld('out');
@@ -2184,7 +2184,7 @@ async function closeFinale(){
   dimTarget = 1;
   const out = finale.animate(
     [{opacity:1, transform:'scale(1)', filter:'blur(0px)'},
-     {opacity:0, transform:'scale(1.06)', filter:'blur(14px)'}],
+     {opacity:0, transform:'scale(1.06)', filter:'blur(8px)'}],
     {duration: reduce ? 150 : 650, easing:'cubic-bezier(.4,0,.9,.6)', fill:'forwards'});
   const back = wasLit ? null : world.animate(
     [{opacity:.1, filter:'blur(6px)', transform:'scale(.9)'},
@@ -2283,7 +2283,7 @@ $('#finReset').addEventListener('click', async () => {
   if (busy) return;
   busy = true;
   finStop(1.2);
-  const a = finale.animate([{opacity:1, filter:'blur(0px)'},{opacity:0, filter:'blur(14px)'}], {duration: reduce ? 150 : 700, easing:'cubic-bezier(.4,0,.9,.6)', fill:'forwards'});
+  const a = finale.animate([{opacity:1, filter:'blur(0px)'},{opacity:0, filter:'blur(8px)'}], {duration: reduce ? 150 : 700, easing:'cubic-bezier(.4,0,.9,.6)', fill:'forwards'});
   world.animate([{opacity: getComputedStyle(world).opacity},{opacity:0}], {duration: reduce ? 150 : 700, fill:'forwards'});
   await a.finished;
   busy = false;
@@ -2300,7 +2300,7 @@ async function start(){
   warp(36, 1700);
   const out = intro.animate(
     [{opacity:1, transform:'scale(1)', filter:'blur(0px)'},
-     {opacity:0, transform:'scale(1.12)', filter:'blur(14px)'}],
+     {opacity:0, transform:'scale(1.12)', filter:'blur(8px)'}],
     {duration: reduce ? 150 : 700, easing:'cubic-bezier(.5,0,.9,.5)', fill:'forwards'});
   world.classList.remove('pre');
   world.style.transformOrigin = '50% 50%';
