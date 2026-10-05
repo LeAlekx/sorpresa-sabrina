@@ -223,13 +223,10 @@ html.hopemsg .star .lname{opacity:0!important}
   text-shadow:0 0 calc(2px + 12px * var(--hg, 0)) rgba(190,255,236,calc(.95 * var(--hg, 0))),
     0 0 calc(6px + 36px * var(--hg, 0)) rgba(110,226,200,calc(.75 * var(--hg, 0))),
     0 0 calc(18px + 80px * var(--hg, 0)) rgba(80,200,210,calc(.5 * var(--hg, 0)))}
-.ly .ch{display:inline-block;opacity:.32;
-  background:linear-gradient(180deg,#fff 0%,rgba(232,238,255,.86) 52%,rgba(255,255,255,.97) 100%);
-  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
-  transition:opacity .6s var(--spring),transform .75s var(--spring)}
+.ly .ch{display:inline-block;opacity:.32;color:#f6f8ff;transition:opacity .6s var(--spring),transform .75s var(--spring)}
 .ly.on .ch:not(.lit){opacity:.22;transform:translateY(.12em) scale(.94)}
 .ly .ch.lit{opacity:1;transform:none}
-.ly b .ch{background:none;-webkit-text-fill-color:currentColor}
+.ly b .ch{color:inherit}
 .ly .w{white-space:nowrap}
 .ly b.glow.red,.ly.on b.glow.red{color:color-mix(in oklab, var(--ink), #ff5c6e calc(var(--hg, 0) * 100%));
   text-shadow:0 0 calc(2px + 12px * var(--hg, 0)) rgba(255,170,180,calc(.95 * var(--hg, 0))),
